@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "510602728447",
+    "firebase_url": "https://emailpasswordauthenticat-325ee.firebaseio.com",
+    "project_id": "emailpasswordauthenticat-325ee",
+    "storage_bucket": "emailpasswordauthenticat-325ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510602728447:android:0d36e62e71a7d87f048dca",
+        "android_client_info": {
+          "package_name": "com.example.emailpasswordauthentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510602728447-8u2e3kqcljosenah0viv9vtdavcsp7af.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emailpasswordauthentication",
+            "certificate_hash": "4e25857a77f58e2fef897b8fc4e2c80ff109dfc7"
+          }
+        },
+        {
+          "client_id": "510602728447-9bfbc45q1nhk8v19tm15rl563527upce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyN23yokedGpLFpVYJfTpf2oDawou5sEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510602728447-9bfbc45q1nhk8v19tm15rl563527upce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510602728447:android:a9c90a59b72657db048dca",
+        "android_client_info": {
+          "package_name": "com.example.googlesignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510602728447-9bfbc45q1nhk8v19tm15rl563527upce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyN23yokedGpLFpVYJfTpf2oDawou5sEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510602728447-9bfbc45q1nhk8v19tm15rl563527upce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
