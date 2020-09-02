@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,30 +42,38 @@ public class MainActivity extends AppCompatActivity {
         String name = et_name.getText().toString();
         String mobile = et_mobile.getText().toString();
         String email = et_email.getText().toString();
-        Student s = new Student();
-        s.setRollno(rollno);
-        s.setName(name);
-        s.setMobile(mobile);
-        s.setEmail(email);
-        reference.child("Student").child(rollno).setValue(s)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this,
-                                    "Data inserted successfullyy", Toast.LENGTH_SHORT).show();
-                            et_rollno.setText("");
-                            et_name.setText("");
-                            et_mobile.setText("");
-                            et_email.setText("");
+        if(rollno.isEmpty()||name.isEmpty()||mobile.isEmpty()||email.isEmpty()){
+            Toast.makeText(this,
+                    "Please fill the details", Toast.LENGTH_SHORT).show();
+        }else{
+
+            Student s = new Student();
+            s.setRollno(rollno);
+            s.setName(name);
+            s.setMobile(mobile);
+            s.setEmail(email);
+            reference.child("Student").push().setValue(s)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(MainActivity.this,
+                                        "Data inserted successfullyy", Toast.LENGTH_SHORT).show();
+                                et_rollno.setText("");
+                                et_name.setText("");
+                                et_mobile.setText("");
+                                et_email.setText("");
+                            }
                         }
-                    }
-                });
+                    });
 
 
+        }
 
     }
 
     public void read(View view) {
+        Intent i = new Intent(this,DataActivity.class);
+        startActivity(i);
     }
 }
