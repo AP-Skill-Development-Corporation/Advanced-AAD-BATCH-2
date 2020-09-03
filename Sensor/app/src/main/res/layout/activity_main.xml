@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shake Sensor"
+        android:id="@+id/shake"
+        android:textSize="25sp"
+        android:textColor="#9C27B0"/>
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Light Sensor"
+        android:id="@+id/light"
+        android:textSize="25sp"
+        android:textColor="#9C27B0"/>
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Touch Sensor"
+        android:id="@+id/touch"
+        android:textSize="25sp"
+        android:textColor="#9C27B0"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mysensor"
+        android:text="No Sensor Detected"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="#FF5722"/>
+
+</LinearLayout>
