@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void update(View view) {
         final String u_rollno = et_sprollno.getText().toString();
+        final String u_name = et_name.getText().toString();
+        final String u_mobile = et_mobile.getText().toString();
+        final String u_email = et_email.getText().toString();
         reference.child("Student").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -89,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,
                                 "Data Existed", Toast.LENGTH_SHORT).show();
                         String key = dataSnapshot.getKey();
-                        s.setName("XXX");
-                        s.setMobile("XXXXXXXXXXX");
-                        s.setEmail("XXXX@gmail.com");
+                        s.setName(u_name);
+                        s.setMobile(u_mobile);
+                        s.setEmail(u_email);
                         reference.child("Student").child(key).setValue(s);
                         return;
                     }
@@ -119,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
                     if(d_rollno.equals(s.getRollno())){
                         String key = snapshot1.getKey();
                         reference.child("Student").child(key).removeValue();
-                        Intent i = new Intent(MainActivity.this,MainActivity.class);
-                        startActivity(i);
                         return;
 
                     }
