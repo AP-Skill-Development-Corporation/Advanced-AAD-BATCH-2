@@ -1,8 +1,10 @@
 package com.example.imageuploading;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -33,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     StorageReference storageReference;
     FirebaseDatabase database;
     DatabaseReference reference;
-
-
+    Uri myFile;
+    StorageReference mRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +85,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveData() {
+        mRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String fileLocation = uri.toString();
+                if(fileLocation!=null){
+                    String name = et_name.getText().toString();
+                    String mobile = et_mobile.getText().toString();
+                    User u = new User();
+                    u.setFileLocation(fileLocation);
+                    u.setName(name);
+                    u.setMobile(mobile);
+                    reference.child("User").push().setValue(u)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(MainActivity.this,
+                                            "Data Inserted", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                }
 
 
+
+            }
+        });
+
+
+       /* if(myFile!=null){
+            imageUpload(myFile);
+        }else {
+            Toast.makeText(this,
+                    "File not selected", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
 
@@ -107,12 +142,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Bitmap b =(Bitmap) data.getExtras().get("data");
                 Uri u = getImageUri(this,b);
                 iv.setImageURI(u);
+                myFile = u;
                 imageUpload(u);
             }
         }else if(requestCode == 33){
             if(resultCode == RESULT_OK){
                 Uri u = data.getData();
                 iv.setImageURI(u);
+                myFile = u;
                 imageUpload(u);
 
             }
@@ -122,43 +159,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void imageUpload(Uri u) {
-        storageReference = storageReference.child("Images/"+ UUID.randomUUID().toString());
-        storageReference.putFile(u).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Please wait...");
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMax(100);
+        pd.setCancelable(false);
+        pd.show();
+         mRef = storageReference.child("Images/"+ UUID.randomUUID().toString());
+        mRef.putFile(u).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                 Toast.makeText(MainActivity.this, "Image Uploaded Successfully",
                         Toast.LENGTH_SHORT).show();
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String fileLocation = uri.toString();
-                        if(fileLocation!=null){
-                            String name = et_name.getText().toString();
-                            String mobile = et_mobile.getText().toString();
-                            User u = new User();
-                            u.setFileLocation(fileLocation);
-                            u.setName(name);
-                            u.setMobile(mobile);
-                            reference.child("User").push().setValue(u)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(MainActivity.this,
-                                                    "Data Inserted", Toast.LENGTH_SHORT).show();
+                pd.dismiss();
 
-                                        }
-                                    });
-                        }
-
-
-
-                    }
-                });
-
-
-
-
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progress = (100.0*snapshot.getBytesTransferred())
+                        /snapshot.getTotalByteCount();
+                pd.setProgress((int) progress);
             }
         });
 
